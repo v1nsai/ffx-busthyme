@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Private stuff
-api_key*
+./src/constants/api_key*
