@@ -15,4 +15,11 @@ module.exports = function(app) {
             changeOrigin: false
         })
     )
+    app.use(
+        '/maps/api/js',
+        createProxyMiddleware({
+            target: 'https://maps.googleapis.com',
+            changeOrigin: false
+        })
+    )
 };
