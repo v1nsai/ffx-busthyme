@@ -16,3 +16,14 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* #map {
+  width: 100%;  
+  height: 100vh;  
+  z-index: 1;
+} */
+
+.leaflet-container {
+  width: 100wh; 
+  height: 100vh;
+}

@@ -15,6 +15,7 @@
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-leaflet": "^2.8.2",
     "@types/react-router-dom": "^5.1.7",
     "fast-equals": "^3.0.3",
     "gtfs-realtime-bindings": "^0.0.6",
@@ -22,6 +23,7 @@
     "leaflet": "^1.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-leaflet": "^4.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "request": "^2.88.2",
@@ -41,13 +43,18 @@
       "react-app/jest"
     ]
   },
-"browserslist": [
-   ">0.2%",
-  "not dead",
-  "not op_mini all"
-],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@types/leaflet": "^1.7.10",
     "gh-pages": "^3.1.0"
+  },
+  "overrides": {
+    "react-leaflet": {
+      "react": "18.1.0"
+    }
   }
 }
