@@ -22,24 +22,53 @@
 
 // OpenStreetMaps
 
+import React from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 
-function TransitMap() {
-  const position = [51.505, -0.09];
+class TransitMap extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    // this.state = { points: [this.state.points ? this.state.points : [],  this.props.points ? this.props.points : []]}
+    if (this.props.points != null) {
+      this.state = { points: [...this.props.points] }
+    }
+    else {
+      this.state = { points: [] }
+    }
+  }
 
-return (
-    <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
-  );
+  getMarkers() {
+    let marks: any[] = [];
+    this.state.points.forEach((coords: any) => {
+      if (coords != null) {
+        marks.push(
+          <Marker position={[coords.latitude, coords.longitude]}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        );
+      }
+    })
+
+    return marks;
+  }
+
+  render() {
+    let center = this.state.points[0]
+    if (!center) {
+      center = { latitude: 38.941371, longitude: -77.364928 }
+    }
+    return (
+      <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {this.getMarkers()}
+      </MapContainer>
+    );
+  }
 }
 
 export default TransitMap;

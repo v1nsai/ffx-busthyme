@@ -1,14 +1,15 @@
 import TransitMap from '../components/TransitMap';
 import { Status } from "@googlemaps/react-wrapper";
+import ReactDOM from 'react-dom';
 
 const DashboardPage = () => {
-    const render = (status: Status) => {
+  const render = (status: Status) => {
     return <h1>{status}</h1>;
-    };
+  };
 
-    return (
-      <TransitMap />
-    );
+  return (
+    <TransitMap />
+  );
 };
 
 var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
@@ -21,18 +22,25 @@ async function fetchGtfsrtBuffer() {
   let buffer = new Uint8Array(await response.arrayBuffer());
   let feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(buffer);
   let entities = feed.entity;
-  entities.forEach(function(entity: any) {
+  let coords: any[] = [];
+  entities.forEach(function (entity: any) {
     if (entity.vehicle.trip.routeId === 'RIBS1') {
-      console.log(entity.vehicle.position);
+      let coord = { latitude: entity.vehicle.position.latitude, longitude: entity.vehicle.position.longitude };
+      coords.push(coord)
     }
   });
+  if(coords.length > 0) {
+    ReactDOM.render(
+      <TransitMap points={coords} />,
+      document.getElementById("root")
+    )
+  }
 
   return entities;
 }
 
 fetchGtfsrtBuffer()
-    .then()
-    .catch(error => console.error(error))
-    .finally(() => {setTimeout(fetchGtfsrtBuffer, 30000)})
+  .catch(error => console.error(error))
+  .finally(() => { setTimeout(fetchGtfsrtBuffer, 30000) })
 
 export default DashboardPage;
