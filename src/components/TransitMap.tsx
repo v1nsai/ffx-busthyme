@@ -7,17 +7,13 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 class TransitMap extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    if (this.props.vehicles != null) {
-      this.state = { vehicles: [...this.props.vehicles] }
-    }
-    else {
-      this.state = { vehicles: [] }
-    }
+    this.state = { vehicles: [] }
+    this.getMarkers = this.getMarkers.bind(this);
   }
 
   getMarkers() {
     let marks: any[] = [];
-    this.state.vehicles.forEach((vehicle: any) => {
+    this.props.vehicles.forEach((vehicle: any) => {
       if (vehicle != null) {
         marks.push(
           <Marker position={[vehicle.latitude, vehicle.longitude]}>
@@ -35,12 +31,10 @@ class TransitMap extends React.Component<any, any> {
   }
 
   render() {
-    let center = this.state.vehicles[0]
-    if (!center) {
-      center = { latitude: 0.0, longitude: 0.0 }
-    }
+    const center = (this.props.vehicles.length == 0) ? {latitude: 0.0, longitude: 0.0} : this.props.vehicles[0]
+    console.log([center.latitude, center.longitude])
     return (
-      <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={false}>
+      <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

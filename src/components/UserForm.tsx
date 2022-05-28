@@ -11,15 +11,15 @@ class UserForm extends React.Component {
   }
 
   handleChange(event: any) {
-    const route = event.target.route.value;
+    const route = event.target.route;
     this.setState( {route: route} );
   }
 
   handleSubmit(event: any) {
+    event.preventDefault();
     const route = event.target.route.value;
     this.setState( { route: route } );
     this.props.whenSubmit(route);
-    event.preventDefault();
     // fetchGtfsrtBuffer(route)
     //   .catch(error => console.error(error))
     //   .finally(() => { setTimeout(fetchGtfsrtBuffer, 30000) })

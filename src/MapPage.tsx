@@ -8,14 +8,21 @@ import { fetchGtfsrtBuffer } from './services/GtfsrtFeeds';
 class MapPage extends React.Component {
   constructor(props: any) {
     super(props);
-    this.state = { route: '' };
+    this.state = { route: '', vehicles: []};
+    this.whenSubmit = this.whenSubmit.bind(this);
+  }
+
+  whenSubmit(route: any) {
+    fetchGtfsrtBuffer(route)
+      .then(vehicles => this.setState( { vehicles: vehicles } ));
+    // this.render();
   }
 
   render() {
     return (
       <>
-        <UserForm whenSubmit={fetchGtfsrtBuffer} /><br />
-        <TransitMap />
+        <UserForm whenSubmit={this.whenSubmit} /><br />
+        <TransitMap vehicles={this.state.vehicles} />
       </>
     )
   };

@@ -26,13 +26,27 @@ export async function fetchGtfsrtBuffer(route: string) {
         }
     });
     if (vehicles.length > 0) {
-        ReactDOM.render(
-            <TransitMap vehicles={vehicles} />,
-            document.getElementById("root")
-        )
+        // ReactDOM.render(
+        //     <TransitMap vehicles={vehicles} />,
+        //     document.getElementById("root")
+        // )
     }
-    setTimeout(fetchGtfsrtBuffer, 30000)
-    // this.fetchGtfsrtBuffer('')
-    //   .catch(error => console.error(error))
-    //   .finally(() => { setTimeout(this.fetchGtfsrtBuffer, 30000) })
+    // return vehicles;
+    const test = [ // TODO remove test data here
+        {
+            latitude: 38.941371,
+            longitude: -77.364928,
+            speed: 55,
+            vehicleId: 1,
+            route: 'RIBS1'
+        },
+        {
+            latitude: 38.944895,
+            longitude: -77.355177,
+            speed: 55,
+            vehicleId: 1,
+            route: 'RIBS1'
+        }
+    ]
+    return test;
 }
