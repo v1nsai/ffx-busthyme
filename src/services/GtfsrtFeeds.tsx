@@ -25,28 +25,22 @@ export async function fetchGtfsrtBuffer(route: string) {
             vehicles.push(vehicle)
         }
     });
-    if (vehicles.length > 0) {
-        // ReactDOM.render(
-        //     <TransitMap vehicles={vehicles} />,
-        //     document.getElementById("root")
-        // )
-    }
-    // return vehicles;
-    const test = [ // TODO remove test data here
-        {
-            latitude: 38.941371,
-            longitude: -77.364928,
-            speed: 55,
-            vehicleId: 1,
-            route: 'RIBS1'
-        },
-        {
-            latitude: 38.944895,
-            longitude: -77.355177,
-            speed: 55,
-            vehicleId: 1,
-            route: 'RIBS1'
-        }
-    ]
-    return test;
+    return vehicles;
+    // const test = [ // TODO remove test data here
+    //     {
+    //         latitude: 38.941371,
+    //         longitude: -77.364928,
+    //         speed: 55,
+    //         vehicleId: 1,
+    //         route: 'RIBS1'
+    //     },
+    //     {
+    //         latitude: 38.944895,
+    //         longitude: -77.355177,
+    //         speed: 55,
+    //         vehicleId: 1,
+    //         route: 'RIBS1'
+    //     }
+    // ]
+    // return test;
 }

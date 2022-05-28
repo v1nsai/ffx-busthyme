@@ -32,7 +32,7 @@ class TransitMap extends React.Component<any, any> {
 
   render() {
     const center = (this.props.vehicles.length == 0) ? {latitude: 38.863902, longitude: -77.243399} : this.props.vehicles[0]
-    const zoom = 13
+    const zoom = (this.props.vehicles.length == 0) ? 12 : 15
     // const center = {latitude: 38, longitude: -77}
     return (
       <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={true}>
