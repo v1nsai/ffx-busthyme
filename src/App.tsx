@@ -1,25 +1,32 @@
-import { Redirect, Route, Switch } from "react-router-dom";
-import { ROUTES } from "./constants/routes";
-import Layout from "./components/Layout";
-import {
-  DashboardPage,
-  CustomersPage,
-  OrdersPage,
-  InventoryPage,
-} from "./pages";
+import React from "react";
 
-function App() {
-  return (
-    <Layout>
-      <Switch>
-        <Route path="/" exact render={() => <Redirect to={ROUTES.main} />} />
-        <Route exact path={ROUTES.main} component={DashboardPage} />
-        <Route exact path={ROUTES.orders} component={OrdersPage} />
-        <Route exact path={ROUTES.customers} component={CustomersPage} />
-        <Route exact path={ROUTES.inventory} component={InventoryPage} />
-      </Switch>
-    </Layout>
-  );
+class App extends React.Component {
+    render() {
+        return (
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="about.php">About</a></li>
+                            <li><a href="#portfolio">Portfolio</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="contact.php">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        );
+    }
 }
 
 export default App;

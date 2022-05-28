@@ -1,50 +1,26 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright 2021 Google LLC. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 // OpenStreetMaps
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 
 class TransitMap extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    // this.state = { points: [this.state.points ? this.state.points : [],  this.props.points ? this.props.points : []]}
-    if (this.props.points != null) {
-      this.state = { points: [...this.props.points] }
-    }
-    else {
-      this.state = { points: [] }
-    }
+    this.state = { vehicles: [] }
+    this.getMarkers = this.getMarkers.bind(this);
   }
 
   getMarkers() {
     let marks: any[] = [];
-    this.state.points.forEach((coords: any) => {
-      if (coords != null) {
+    this.props.vehicles.forEach((vehicle: any) => {
+      if (vehicle != null) {
         marks.push(
-          <Marker position={[coords.latitude, coords.longitude]}>
+          <Marker position={[vehicle.latitude, vehicle.longitude]}>
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+              vehicle ID: {vehicle.vehicleId}<br />
+              route: {vehicle.route}<br />
+              speed: {vehicle.speed}<br />
             </Popup>
           </Marker>
         );
@@ -55,12 +31,12 @@ class TransitMap extends React.Component<any, any> {
   }
 
   render() {
-    let center = this.state.points[0]
-    if (!center) {
-      center = { latitude: 38.941371, longitude: -77.364928 }
-    }
+    const center = (this.props.vehicles.length == 0) ? {latitude: 38.863902, longitude: -77.243399} : this.props.vehicles[0]
+    const zoom = (this.props.vehicles.length == 0) ? 12 : 15
+    // const center = {latitude: 38, longitude: -77}
     return (
-      <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={false}>
+      <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={true}>
+        <ChangeView center={[center.latitude, center.longitude]} zoom={zoom} /> 
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -70,6 +46,42 @@ class TransitMap extends React.Component<any, any> {
     );
   }
 }
+
+function ChangeView({center, zoom}) {
+  const map = useMap();
+  map.setView(center, zoom);
+  return null;
+}
+// var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
+
+// async function fetchGtfsrtBuffer(route: string) {
+//   let response = await fetch('/gtfsrt/vehicles', {
+//     method: 'GET'
+//   });
+
+//   let buffer = new Uint8Array(await response.arrayBuffer());
+//   let feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(buffer);
+//   let entities = feed.entity;
+//   let vehicles: any[] = [];
+//   entities.forEach(function (entity: any) {
+//     if (entity.vehicle.trip.routeId === route) {
+//       let vehicle = { 
+//         latitude: entity.vehicle.position.latitude, 
+//         longitude: entity.vehicle.position.longitude,
+//         speed: entity.vehicle.position.speed,
+//         vehicleId: entity.vehicle.vehicle.id,
+//         route: entity.vehicle.trip.routeId
+//       };
+//       vehicles.push(vehicle)
+//     }
+//   });
+//   if(vehicles.length > 0) {
+//     ReactDOM.render(
+//       <TransitMap vehicles={vehicles} />,
+//       document.getElementById("root")
+//     )
+//   }
+// }
 
 export default TransitMap;
 
