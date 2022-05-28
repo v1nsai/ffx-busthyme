@@ -31,10 +31,12 @@ class TransitMap extends React.Component<any, any> {
   }
 
   render() {
-    const center = (this.props.vehicles.length == 0) ? {latitude: 0.0, longitude: 0.0} : this.props.vehicles[0]
-    console.log([center.latitude, center.longitude])
+    const center = (this.props.vehicles.length == 0) ? {latitude: 38.863902, longitude: -77.243399} : this.props.vehicles[0]
+    const zoom = 13
+    // const center = {latitude: 38, longitude: -77}
     return (
       <MapContainer center={[center.latitude, center.longitude]} zoom={13} scrollWheelZoom={true}>
+        <ChangeView center={[center.latitude, center.longitude]} zoom={zoom} /> 
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -45,6 +47,11 @@ class TransitMap extends React.Component<any, any> {
   }
 }
 
+function ChangeView({center, zoom}) {
+  const map = useMap();
+  map.setView(center, zoom);
+  return null;
+}
 // var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
 
 // async function fetchGtfsrtBuffer(route: string) {
