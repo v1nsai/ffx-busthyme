@@ -3,7 +3,7 @@ import UserForm from '../components/UserForm'
 import React from 'react';
 import FairfaxConnectorService from '../services/FairfaxConnectorService';
 
-class MapPage extends React.Component {
+class MapPage extends React.Component<{}, {vehicles: any, route: string}> {
   constructor(props: any) {
     super(props);
     this.state = { route: '', vehicles: []};

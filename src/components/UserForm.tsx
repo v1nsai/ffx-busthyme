@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-class UserForm extends React.Component {
+class UserForm extends React.Component<{whenSubmit: any}, {route: string}> {
   constructor(props: any) {
     super(props);
     this.state = { route: 'RIBS1' };
