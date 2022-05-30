@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ffx-busthyme/static/css/main.125ffbc9.css",
-    "main.js": "/ffx-busthyme/static/js/main.76fb6e56.js",
+    "main.js": "/ffx-busthyme/static/js/main.f6fba35a.js",
     "index.html": "/ffx-busthyme/index.html",
     "main.125ffbc9.css.map": "/ffx-busthyme/static/css/main.125ffbc9.css.map",
-    "main.76fb6e56.js.map": "/ffx-busthyme/static/js/main.76fb6e56.js.map"
+    "main.f6fba35a.js.map": "/ffx-busthyme/static/js/main.f6fba35a.js.map"
   },
   "entrypoints": [
     "static/css/main.125ffbc9.css",
-    "static/js/main.76fb6e56.js"
+    "static/js/main.f6fba35a.js"
   ]
 }
