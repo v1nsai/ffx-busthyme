@@ -1,8 +1,5 @@
-import React from "react";
-
 class FairfaxConnectorService {
     static fetchVehicles = async (route: string) => {
-        // const test = await this.fetchRouteShape(route);
         const entities = await this.fetchGtfsrtFeedEntities('/gtfsrt/vehicles')
         let vehicles: any[] = [];
         entities.forEach(function (entity: any) {
@@ -48,13 +45,7 @@ class FairfaxConnectorService {
                 polyline.push([pt.lat, pt.lon])
             })
         })
-        // patternArray.forEach((pattern: any) => {
-        //     let length = pattern.ln
-        //     let id = pattern.pid
-        //     let points = pattern.pt
-        //     let dir = pattern.rtdir
-            
-        // })
+
         return polyline;
     }
 

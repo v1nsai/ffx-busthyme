@@ -1,8 +1,5 @@
-import { render } from '@testing-library/react';
 import React from 'react';
-import ReactDOM, { flushSync } from 'react-dom';
 import { MapContainer, Marker, Polygon, Popup, TileLayer, useMap } from 'react-leaflet'
-import FairfaxConnectorService from '../services/FairfaxConnectorService';
 
 class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any, route: any, shape: []}, {}> {
   constructor(props: any) {
