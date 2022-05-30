@@ -3,10 +3,10 @@ import UserForm from '../components/UserForm'
 import React from 'react';
 import FairfaxConnectorService from '../services/FairfaxConnectorService';
 
-class MapPage extends React.Component<{}, {vehicles: any, route: string, center: any, zoom: number}> {
+class MapPage extends React.Component<{}, {vehicles: any, route: string, center: any, zoom: number, shape: []}> {
   constructor(props: any) {
     super(props);
-    this.state = { vehicles: [], route: '', center: {latitude: 38.863902, longitude: -77.243399}, zoom: 12 }
+    this.state = { vehicles: [], route: '', center: {latitude: 38.863902, longitude: -77.243399}, zoom: 12, shape: [] }
     this.whenSubmit = this.whenSubmit.bind(this);
   }
 
@@ -26,6 +26,7 @@ class MapPage extends React.Component<{}, {vehicles: any, route: string, center:
 
   whenSubmit = async (route: any) => {
     const vehicles = await FairfaxConnectorService.fetchVehicles(route)
+    const shape = await FairfaxConnectorService.fetchRouteShape(route)
 
     const center = (vehicles.length == 0) ? {latitude: 38.863902, longitude: -77.243399} : this.calculateCenter(vehicles)
     const zoom = (vehicles.length == 0) ? 12 : 14
@@ -33,7 +34,8 @@ class MapPage extends React.Component<{}, {vehicles: any, route: string, center:
       center: center,
       zoom: zoom,
       route: route,
-      vehicles: vehicles
+      vehicles: vehicles,
+      shape: shape
     })
   }
 
@@ -41,7 +43,7 @@ class MapPage extends React.Component<{}, {vehicles: any, route: string, center:
     return (
       <>
         <UserForm whenSubmit={this.whenSubmit} /><br />
-        <TransitMap vehicles={this.state.vehicles} center={this.state.center} zoom={this.state.zoom} route={this.state.route} />
+        <TransitMap vehicles={this.state.vehicles} center={this.state.center} zoom={this.state.zoom} route={this.state.route} shape={this.state.shape} />
       </>
     )
   };

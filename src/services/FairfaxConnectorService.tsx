@@ -41,7 +41,13 @@ class FairfaxConnectorService {
         const api_key = process.env.FAIRFAX_CONNECTOR_KEY;
         let url = `/bustime/api/v3/getpatterns?rt=${route}&format=json&key=${process.env.REACT_APP_FAIRFAX_CONNECTOR_KEY}`
         let response: any = await fetch(url).then(response => response.json())
-        const patternArray = await response['bustime-response']['ptr']
+        let polyline: any = []
+        const ptr = await response['bustime-response']['ptr']
+        ptr.forEach((ptr: any) => {
+            ptr.pt.forEach((pt: any) => {
+                polyline.push([pt.lat, pt.lon])
+            })
+        })
         // patternArray.forEach((pattern: any) => {
         //     let length = pattern.ln
         //     let id = pattern.pid
@@ -49,7 +55,7 @@ class FairfaxConnectorService {
         //     let dir = pattern.rtdir
             
         // })
-        return patternArray;
+        return polyline;
     }
 
     static async fetchGtfsrtFeedEntities(url: string) {

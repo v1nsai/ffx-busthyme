@@ -4,14 +4,14 @@ import ReactDOM, { flushSync } from 'react-dom';
 import { MapContainer, Marker, Polygon, Popup, TileLayer, useMap } from 'react-leaflet'
 import FairfaxConnectorService from '../services/FairfaxConnectorService';
 
-class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any, route: any}, {}> {
+class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any, route: any, shape: []}, {}> {
   constructor(props: any) {
     super(props);
-    this.putMarkers = this.putMarkers.bind(this);
-    this.putPolygon = this.putPolygon.bind(this);
+    this.getMarkers = this.getMarkers.bind(this);
+    this.getPolygon = this.getPolygon.bind(this);
   }
 
-  putMarkers() {
+  getMarkers() {
     let marks: any[] = [];
     this.props.vehicles.forEach((vehicle: any) => {
       if (vehicle != null) {
@@ -30,9 +30,9 @@ class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any,
     return marks;
   }
 
-  putPolygon(route: string) {
-    if(route != '') {
-      const positions: any = FairfaxConnectorService.fetchRouteShape(route)
+  getPolygon() {
+    if(this.props.shape.length != 0) {
+      const positions = this.props.shape
       return (
         <Polygon positions={positions} />
       )
@@ -47,8 +47,8 @@ class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any,
     const center = this.props.center ? this.props.center : {latitude: 38.863902, longitude: -77.243399}
     const zoom = this.props.zoom ? this.props.zoom : 12
 
-    const markers = this.putMarkers()
-    const routeShape = this.putPolygon(this.props.route)
+    const markers = this.getMarkers()
+    const routeShape = this.getPolygon()
     const markersAndRouteShape = [...markers, routeShape]
     return (
       <MapContainer center={[center.latitude, center.longitude]} zoom={zoom} scrollWheelZoom={true}>
