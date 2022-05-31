@@ -28,7 +28,7 @@ class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any,
   }
 
   getPolygon() {
-    if(this.props.shape.length != 0) {
+    if(this.props.shape.length !== 0) {
       const positions = this.props.shape
       return (
         <Polygon positions={positions} />
@@ -40,7 +40,6 @@ class TransitMap extends React.Component<{vehicles: any, center: any, zoom: any,
   }
   
   render() {
-    const route = this.props.route ? this.props.route : ''
     const center = this.props.center ? this.props.center : {latitude: 38.863902, longitude: -77.243399}
     const zoom = this.props.zoom ? this.props.zoom : 12
 

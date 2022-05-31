@@ -1,9 +1,27 @@
 // import express from 'express'
 
 function startProxy() {
+    var express = require('express')
+    var http = require('http');
+    var httpProxy = require('http-proxy');
+    //
+    // Create your proxy server and set the target in the options.
+    //
+    httpProxy.createProxyServer({ target: 'http://localhost:9000' }).listen(8000); // See (†)
+
+    //
+    // Create your target server
+    //
+    const server = http.createServer(function (req, res) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2));
+        res.end();
+    })
+    server.listen(9000);
+
     // const app = express();
     // const port = 8080;
-    
+
     // // app.get('/', (req, res) => res.send('Hello World!'));
     // app.use((req, res, next) => {
     //     res.header("Access-Control-Allow-Origin", "*");
@@ -18,10 +36,10 @@ function startProxy() {
     //     // read query parameters
     //     const symbol = req.query["symbol"];
     //     const range = req.query["range"];
-      
+
     //     // craft IEX API URL
     //     const url = `https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbol}&types=quote,chart&range=${range}`;
-      
+
     //     // make request to IEX API and forward response
     //     request(url).pipe(res);
     //   });

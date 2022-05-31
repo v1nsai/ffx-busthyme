@@ -28,8 +28,8 @@ class MapPage extends React.Component<{}, {vehicles: any, route: string, center:
     const vehicles = await FairfaxConnectorService.fetchVehicles(route)
     const shape = await FairfaxConnectorService.fetchRouteShape(route)
 
-    const center = (vehicles.length == 0) ? {latitude: 38.863902, longitude: -77.243399} : this.calculateCenter(vehicles)
-    const zoom = (vehicles.length == 0) ? 12 : 14
+    const center = (vehicles.length === 0) ? {latitude: 38.863902, longitude: -77.243399} : this.calculateCenter(vehicles)
+    const zoom = (vehicles.length === 0) ? 12 : 14
     this.setState({
       center: center,
       zoom: zoom,

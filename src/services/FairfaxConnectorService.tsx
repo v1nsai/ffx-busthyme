@@ -1,10 +1,13 @@
 class FairfaxConnectorService {
-    static ffxBaseUrl = ''
+    // static cors_proxy_url = process.env.REACT_APP_CORS_PROXY ? process.env.REACT_APP_CORS_PROXY : '';
+    static cors_proxy_url = ''
+    static ffxBaseUrl = 'https://www.fairfaxcounty.gov'
     static vehiclesEndpoint = '/gtfsrt/vehicles'
     static patternsEndpoint = '/bustime/api/v3/getpatterns'
 
     static fetchVehicles = async (route: string) => {
-        const entities = await this.fetchGtfsrtFeedEntities(this.ffxBaseUrl + this.vehiclesEndpoint)
+        console.log(this.cors_proxy_url)
+        const entities = await this.fetchGtfsrtFeedEntities(this.cors_proxy_url + this.ffxBaseUrl + this.vehiclesEndpoint)
         let vehicles: any[] = [];
         entities.forEach(function (entity: any) {
             if (entity.vehicle.trip.routeId === route) {
@@ -39,7 +42,7 @@ class FairfaxConnectorService {
     }
 
     static async fetchRouteShape(route: string) {
-        let url = `${this.ffxBaseUrl + this.patternsEndpoint}?rt=${route}&format=json&key=${process.env.REACT_APP_FAIRFAX_CONNECTOR_KEY}`
+        let url = `${this.cors_proxy_url + this.ffxBaseUrl + this.patternsEndpoint}?rt=${route}&format=json&key=${process.env.REACT_APP_FAIRFAX_CONNECTOR_KEY}`
         let response: any = await fetch(url).then(response => response.json())
         let polyline: any = []
         const ptr = await response['bustime-response']['ptr']
@@ -60,7 +63,7 @@ class FairfaxConnectorService {
 
         const response = await fetch(url, {
             method: 'GET'
-        });
+        })
 
         const buffer = new Uint8Array(await response.arrayBuffer());
         const feed = await GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(buffer);
