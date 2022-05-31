@@ -1,6 +1,10 @@
 class FairfaxConnectorService {
+    static ffxBaseUrl = ''
+    static vehiclesEndpoint = '/gtfsrt/vehicles'
+    static patternsEndpoint = '/bustime/api/v3/getpatterns'
+
     static fetchVehicles = async (route: string) => {
-        const entities = await this.fetchGtfsrtFeedEntities('/gtfsrt/vehicles')
+        const entities = await this.fetchGtfsrtFeedEntities(this.ffxBaseUrl + this.vehiclesEndpoint)
         let vehicles: any[] = [];
         entities.forEach(function (entity: any) {
             if (entity.vehicle.trip.routeId === route) {
@@ -35,16 +39,17 @@ class FairfaxConnectorService {
     }
 
     static async fetchRouteShape(route: string) {
-        const api_key = process.env.FAIRFAX_CONNECTOR_KEY;
-        let url = `/bustime/api/v3/getpatterns?rt=${route}&format=json&key=${process.env.REACT_APP_FAIRFAX_CONNECTOR_KEY}`
+        let url = `${this.ffxBaseUrl + this.patternsEndpoint}?rt=${route}&format=json&key=${process.env.REACT_APP_FAIRFAX_CONNECTOR_KEY}`
         let response: any = await fetch(url).then(response => response.json())
         let polyline: any = []
         const ptr = await response['bustime-response']['ptr']
-        ptr.forEach((ptr: any) => {
-            ptr.pt.forEach((pt: any) => {
-                polyline.push([pt.lat, pt.lon])
+        if(ptr) {
+            ptr.forEach((ptr: any) => {
+                ptr.pt.forEach((pt: any) => {
+                    polyline.push([pt.lat, pt.lon])
+                })
             })
-        })
+        }
 
         return polyline;
     }
